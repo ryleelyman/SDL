@@ -15,6 +15,8 @@ pub fn build(b: *std.Build) void {
     lib.addCSourceFiles(&generic_src_files, &.{});
     lib.defineCMacro("SDL_USE_BUILTIN_OPENGL_DEFINITIONS", "1");
     lib.linkLibC();
+    lib.linkSystemLibrary("freetype2");
+    lib.linkSystemLibrary("harfbuzz");
     switch (t.os.tag) {
         .windows => {
             lib.addCSourceFiles(&windows_src_files, &.{});
@@ -64,6 +66,7 @@ const generic_src_files = [_][]const u8{
     "src/SDL_list.c",
     "src/SDL_log.c",
     "src/SDL_utils.c",
+    "src/SDL_ttf.c",
     "src/atomic/SDL_atomic.c",
     "src/atomic/SDL_spinlock.c",
     "src/audio/SDL_audio.c",
