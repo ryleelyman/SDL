@@ -9,14 +9,22 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+    const lib_ttf = b.addStaticLibrary(.{
+        .name = "SDL2_ttf",
+        .target = target,
+        .optimize = optimize,
+    });
     const t = lib.target_info.target;
 
     lib.addIncludePath("include");
     lib.addCSourceFiles(&generic_src_files, &.{});
     lib.defineCMacro("SDL_USE_BUILTIN_OPENGL_DEFINITIONS", "1");
     lib.linkLibC();
-    lib.linkSystemLibrary("freetype2");
-    lib.linkSystemLibrary("harfbuzz");
+    lib_ttf.addIncludePath("include");
+    lib_ttf.addCSourceFile("src/SDL_ttf.c", &.{});
+    lib_ttf.linkSystemLibrary("freetype2");
+    lib_ttf.linkSystemLibrary("harfbuzz");
+    lib_ttf.linkLibC();
     switch (t.os.tag) {
         .windows => {
             lib.addCSourceFiles(&windows_src_files, &.{});
@@ -53,7 +61,9 @@ pub fn build(b: *std.Build) void {
         },
     }
     lib.installHeadersDirectory("include", "SDL2");
+    lib.installHeader("include/SDL_ttf.h", "SDL2_ttf/SDL_ttf.h");
     b.installArtifact(lib);
+    b.installArtifact(lib_ttf);
 }
 
 const generic_src_files = [_][]const u8{
@@ -66,7 +76,6 @@ const generic_src_files = [_][]const u8{
     "src/SDL_list.c",
     "src/SDL_log.c",
     "src/SDL_utils.c",
-    "src/SDL_ttf.c",
     "src/atomic/SDL_atomic.c",
     "src/atomic/SDL_spinlock.c",
     "src/audio/SDL_audio.c",
