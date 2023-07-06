@@ -52,6 +52,7 @@ pub fn build(b: *std.Build) void {
             lib.linkFramework("Foundation");
         },
         else => {
+            lib.addCSourceFiles(&linux_src_files, &.{});
             const config_header = b.addConfigHeader(.{
                 .style = .{ .cmake = .{ .path = "include/SDL_config.h.cmake" } },
                 .include_path = "SDL2/SDL_config.h",
@@ -275,7 +276,7 @@ const linux_src_files = [_][]const u8{
     "src/core/linux/SDL_evdev.c",
     "src/core/linux/SDL_evdev_capabilities.c",
     "src/core/linux/SDL_evdev_kbd.c",
-    "src/core/linux/SDL_fcitx.c",
+    // "src/core/linux/SDL_fcitx.c",
     "src/core/linux/SDL_ibus.c",
     "src/core/linux/SDL_ime.c",
     "src/core/linux/SDL_sandbox.c",
