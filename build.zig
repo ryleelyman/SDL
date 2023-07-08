@@ -27,6 +27,8 @@ pub fn build(b: *std.Build) void {
     lib_ttf.linkLibC();
     switch (t.os.tag) {
         .windows => {
+            lib.addIncludePath(".");
+            lib_ttf.addIncludePath(".");
             lib.installHeader("SDL_config.h", "SDL2/SDL_config.h");
             lib.addCSourceFiles(&windows_src_files, &.{});
             lib.linkSystemLibrary("setupapi");
@@ -38,6 +40,8 @@ pub fn build(b: *std.Build) void {
             lib.linkSystemLibrary("ole32");
         },
         .macos => {
+            lib.addIncludePath(".");
+            lib_ttf.addIncludePath(".");
             lib.installHeader("SDL_config.h", "SDL2/SDL_config.h");
             lib.addCSourceFiles(&darwin_src_files, &.{});
             lib.addCSourceFiles(&objective_c_src_files, &.{"-fobjc-arc"});
@@ -59,6 +63,8 @@ pub fn build(b: *std.Build) void {
                 .style = .{ .cmake = .{ .path = "include/SDL_config.h.cmake" } },
                 .include_path = "SDL2/SDL_config.h",
             }, linux_config_h_vals);
+            lib.step.dependOn(&config_header.step);
+            lib_ttf.step.dependOn(&config_header.step);
             lib.addConfigHeader(config_header);
             lib.installConfigHeader(config_header, .{});
         },
