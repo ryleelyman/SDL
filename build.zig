@@ -322,6 +322,13 @@ const linux_src_files = [_][]const u8{
     "src/audio/alsa/SDL_alsa_audio.c",
     "src/audio/jack/SDL_jackaudio.c",
     "src/audio/pulseaudio/SDL_pulseaudio.c",
+    "src/timer/unix/SDL_systimer.c",
+
+    "src/thread/pthread/SDL_syscond.c",
+    "src/thread/pthread/SDL_sysmutex.c",
+    "src/thread/pthread/SDL_syssem.c",
+    "src/thread/pthread/SDL_systhread.c",
+    "src/thread/pthread/SDL_systls.c",
 };
 
 const darwin_src_files = [_][]const u8{
