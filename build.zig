@@ -54,16 +54,21 @@ pub fn build(b: *std.Build) void {
             lib.linkFramework("Foundation");
         },
         else => {
+            lib.addIncludePath("/usr/include/libdecor-0");
+            lib.addIncludePath("/usr/include/dbus-1.0");
+            lib.addIncludePath("/usr/lib/x86_64-linux-gnu/dbus-1.0/include");
             lib.addCSourceFiles(&linux_src_files, &.{});
             const config_header = b.addConfigHeader(.{
                 .style = .{ .blank = {} },
-                .include_path = "include/SDL_config_linux.h",
+                .include_path = "SDL_config_linux.h",
             }, linux_config_h_vals);
             lib.addConfigHeader(config_header);
             lib_ttf.addConfigHeader(config_header);
             lib.step.dependOn(&config_header.step);
             lib_ttf.step.dependOn(&config_header.step);
-            lib.installConfigHeader(config_header, .{});
+            lib.installConfigHeader(config_header, .{
+                .dest_rel_path = "SDL2/SDL_config_linux.h",
+            });
         },
     }
     lib.installHeadersDirectory("include", "SDL2");
