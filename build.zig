@@ -57,7 +57,9 @@ pub fn build(b: *std.Build) void {
             lib.addIncludePath("/usr/include/libdecor-0");
             lib.addIncludePath("/usr/include/dbus-1.0");
             lib.addIncludePath("/usr/lib/x86_64-linux-gnu/dbus-1.0/include");
+            lib.addIncludePath("wayland-generated-protocols");
             lib.addCSourceFiles(&linux_src_files, &.{});
+            lib.addCSourceFiles(&wayland_src_files, &.{});
             const config_header = b.addConfigHeader(.{
                 .style = .{ .blank = {} },
                 .include_path = "SDL_config_linux.h",
@@ -406,6 +408,22 @@ const ios_src_files = [_][]const u8{
     "src/hidapi/ios/hid.m",
     "src/misc/ios/SDL_sysurl.m",
     "src/joystick/iphoneos/SDL_mfijoystick.m",
+};
+
+const wayland_src_files = [_][]const u8{
+    "wayland-generated-protocols/idle-inhibit-unstable-v1-protocol.c",
+    "wayland-generated-protocols/keyboard-shortcuts-inhibit-unstable-v1-protocol.c",
+    "wayland-generated-protocols/pointer-constraints-unstable-v1-protocol.c",
+    "wayland-generated-protocols/primary-selection-unstable-v1-protocol.c",
+    "wayland-generated-protocols/relative-pointer-unstable-v1-protocol.c",
+    "wayland-generated-protocols/tablet-unstable-v2-protocol.c",
+    "wayland-generated-protocols/text-input-unstable-v3-protocol.c",
+    "wayland-generated-protocols/viewporter-protocol.c",
+    "wayland-generated-protocols/wayland-protocol.c",
+    "wayland-generated-protocols/xdg-activation-v1-protocol.c",
+    "wayland-generated-protocols/xdg-decoration-unstable-v1-protocol.c",
+    "wayland-generated-protocols/xdg-output-unstable-v1-protocol.c",
+    "wayland-generated-protocols/xdg-shell-protocol.c",
 };
 
 const unknown_src_files = [_][]const u8{
