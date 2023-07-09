@@ -56,7 +56,7 @@ pub fn build(b: *std.Build) void {
         else => {
             lib.addCSourceFiles(&linux_src_files, &.{});
             const config_header = b.addConfigHeader(.{
-                .style = .{.blank},
+                .style = .{ .blank = {} },
                 .include_path = "include/SDL_config_linux.h",
             }, linux_config_h_vals);
             lib.addConfigHeader(config_header);
