@@ -27,7 +27,6 @@ pub fn build(b: *std.Build) void {
     lib_ttf.linkLibC();
     switch (t.os.tag) {
         .windows => {
-            lib.installHeader("SDL_config.h", "SDL2/SDL_config.h");
             lib.addCSourceFiles(&windows_src_files, &.{});
             lib.linkSystemLibrary("setupapi");
             lib.linkSystemLibrary("winmm");
@@ -38,7 +37,6 @@ pub fn build(b: *std.Build) void {
             lib.linkSystemLibrary("ole32");
         },
         .macos => {
-            lib.installHeader("SDL_config.h", "SDL2/SDL_config.h");
             lib.addCSourceFiles(&darwin_src_files, &.{});
             lib.addCSourceFiles(&objective_c_src_files, &.{"-fobjc-arc"});
             lib.linkFramework("OpenGL");
