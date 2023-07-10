@@ -355,9 +355,20 @@ const linux_src_files = [_][]const u8{
     "src/sensor/dummy/SDL_dummysensor.c",
     "src/sensor/SDL_sensor.c",
     "src/render/opengl/SDL_render_gl.c",
+    "src/render/opengl/SDL_shaders_gl.c",
     "src/render/opengles2/SDL_render_gles2.c",
+    "src/render/opengles2/SDL_shaders_gles2.c",
+    "src/video/kmsdrm/SDL_kmsdrmdyn.c",
+    "src/video/kmsdrm/SDL_kmsdrmevents.c",
+    "src/video/kmsdrm/SDL_kmsdrmmouse.c",
+    "src/video/kmsdrm/SDL_kmsdrmopengles.c",
     "src/video/kmsdrm/SDL_kmsdrmvideo.c",
+    "src/video/kmsdrm/SDL_kmsdrmvulkan.c",
+    "src/video/offscreen/SDL_offscreenevents.c",
+    "src/video/offscreen/SDL_offscreenframebuffer.c",
+    "src/video/offscreen/SDL_offscreenopengles.c",
     "src/video/offscreen/SDL_offscreenvideo.c",
+    "src/video/offscreen/SDL_offscreenwindow.c",
 };
 
 const darwin_src_files = [_][]const u8{
