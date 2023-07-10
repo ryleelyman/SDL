@@ -56,6 +56,9 @@ pub fn build(b: *std.Build) void {
             lib.addIncludePath("/usr/include/dbus-1.0");
             lib.addIncludePath("/usr/lib/dbus-1.0/include");
             lib.addIncludePath("/usr/lib/x86_64-linux-gnu/dbus-1.0/include");
+            lib.addIncludePath("/usr/include/pipewire-0.3");
+            lib.addIncludePath("/usr/include/spa-0.2");
+            lib.addIncludePath("/usr/include/libdrm");
             lib.addIncludePath("wayland-generated-protocols");
             lib.addCSourceFiles(&linux_src_files, &.{});
             lib.addCSourceFiles(&wayland_src_files, &.{});
@@ -284,6 +287,7 @@ const windows_src_files = [_][]const u8{
 
 const linux_src_files = [_][]const u8{
     "src/timer/unix/SDL_systimer.c",
+    "src/loadso/dlopen/SDL_sysloadso.c",
     "src/core/linux/SDL_dbus.c",
     "src/core/linux/SDL_evdev.c",
     "src/core/linux/SDL_evdev_capabilities.c",
@@ -297,6 +301,7 @@ const linux_src_files = [_][]const u8{
     "src/haptic/linux/SDL_syshaptic.c",
     "src/hidapi/linux/hid.c",
     "src/joystick/linux/SDL_sysjoystick.c",
+    "src/joystick/steam/SDL_steamcontroller.c",
     "src/power/linux/SDL_syspower.c",
 
     "src/video/wayland/SDL_waylandclipboard.c",
@@ -334,12 +339,25 @@ const linux_src_files = [_][]const u8{
     "src/audio/alsa/SDL_alsa_audio.c",
     "src/audio/jack/SDL_jackaudio.c",
     "src/audio/pulseaudio/SDL_pulseaudio.c",
+    "src/audio/pipewire/SDL_pipewire.c",
+    "src/audio/dsp/SDL_dspaudio.c",
+    "src/audio/disk/SDL_diskaudio.c",
 
     "src/thread/pthread/SDL_syscond.c",
     "src/thread/pthread/SDL_sysmutex.c",
     "src/thread/pthread/SDL_syssem.c",
     "src/thread/pthread/SDL_systhread.c",
     "src/thread/pthread/SDL_systls.c",
+    "src/core/unix/SDL_poll.c",
+
+    "src/misc/SDL_url.c",
+    "src/misc/unix/SDL_sysurl.c",
+    "src/sensor/dummy/SDL_dummysensor.c",
+    "src/sensor/SDL_sensor.c",
+    "src/render/opengl/SDL_render_gl.c",
+    "src/render/opengles2/SDL_render_gles2.c",
+    "src/video/kmsdrm/SDL_kmsdrmvideo.c",
+    "src/video/offscreen/SDL_offscreenvideo.c",
 };
 
 const darwin_src_files = [_][]const u8{
