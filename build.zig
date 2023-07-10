@@ -12,7 +12,7 @@ pub fn build(b: *std.Build) void {
     const lib_ttf = b.addStaticLibrary(.{
         .name = "SDL2_ttf",
         .target = target,
-        .optimize = optimize,
+        .optimize = .ReleaseFast,
     });
     const t = lib.target_info.target;
 
