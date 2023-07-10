@@ -54,6 +54,7 @@ pub fn build(b: *std.Build) void {
         else => {
             lib.addIncludePath("/usr/include/libdecor-0");
             lib.addIncludePath("/usr/include/dbus-1.0");
+            lib.addIncludePath("/usr/lib/dbus-1.0/include");
             lib.addIncludePath("/usr/lib/x86_64-linux-gnu/dbus-1.0/include");
             lib.addIncludePath("wayland-generated-protocols");
             lib.addCSourceFiles(&linux_src_files, &.{});
