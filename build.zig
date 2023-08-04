@@ -16,12 +16,12 @@ pub fn build(b: *std.Build) void {
     });
     const t = lib.target_info.target;
 
-    lib.addIncludePath("include");
+    lib.addIncludePath(std.Build.LazyPath.relative("include"));
     lib.addCSourceFiles(&generic_src_files, &.{});
     lib.defineCMacro("SDL_USE_BUILTIN_OPENGL_DEFINITIONS", "1");
     lib.linkLibC();
-    lib_ttf.addIncludePath("include");
-    lib_ttf.addCSourceFile("src/SDL_ttf.c", &.{});
+    lib_ttf.addIncludePath(std.Build.LazyPath.relative("include"));
+    lib_ttf.addCSourceFile(.{ .file = .{ .path = "src/SDL_ttf.c" }, .flags = &.{} });
     lib_ttf.linkSystemLibrary("freetype2");
     lib_ttf.linkSystemLibrary("harfbuzz");
     lib_ttf.linkLibC();
@@ -52,14 +52,14 @@ pub fn build(b: *std.Build) void {
             lib.linkFramework("Foundation");
         },
         else => {
-            lib.addIncludePath("/usr/include/libdecor-0");
-            lib.addIncludePath("/usr/include/dbus-1.0");
-            lib.addIncludePath("/usr/lib/dbus-1.0/include");
-            lib.addIncludePath("/usr/lib/x86_64-linux-gnu/dbus-1.0/include");
-            lib.addIncludePath("/usr/include/pipewire-0.3");
-            lib.addIncludePath("/usr/include/spa-0.2");
-            lib.addIncludePath("/usr/include/libdrm");
-            lib.addIncludePath("wayland-generated-protocols");
+            lib.addIncludePath(.{ .cwd_relative = "/usr/include/libdecor-0" });
+            lib.addIncludePath(.{ .cwd_relative = "/usr/include/dbus-1.0" });
+            lib.addIncludePath(.{ .cwd_relative = "/usr/lib/dbus-1.0/include" });
+            lib.addIncludePath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/dbus-1.0/include" });
+            lib.addIncludePath(.{ .cwd_relative = "/usr/include/pipewire-0.3" });
+            lib.addIncludePath(.{ .cwd_relative = "/usr/include/spa-0.2" });
+            lib.addIncludePath(.{ .cwd_relative = "/usr/include/libdrm" });
+            lib.addIncludePath(.{ .path = "wayland-generated-protocols" });
             lib.addCSourceFiles(&linux_src_files, &.{});
             lib.addCSourceFiles(&wayland_src_files, &.{});
             const config_header = b.addConfigHeader(.{
